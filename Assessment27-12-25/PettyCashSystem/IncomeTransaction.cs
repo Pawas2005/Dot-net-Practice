@@ -7,7 +7,7 @@ public class IncomeTransaction : Transaction
 {
     public string Source { get; set; }
 
-    public override string GetSummary() //every non-abstract child class must provide its implementation.
+    public override string GetSummary() //non-abstract child class
     {
         return $"Income = ${Amount} from {Source} - {Description}";
     }

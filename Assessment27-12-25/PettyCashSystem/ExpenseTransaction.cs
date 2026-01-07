@@ -7,7 +7,7 @@ public class ExpenseTransaction : Transaction
 {
     public string Category { get; set; }
 
-    public override string GetSummary() //every non-abstract child class must provide its implementation.
+    public override string GetSummary() //non-abstract child class
     {
         return $"Expense = ${Amount} for {Category} - {Description}";
     }
