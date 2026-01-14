@@ -13,11 +13,18 @@ namespace BankAccountsApp
             if (string.IsNullOrEmpty(OwnerTxt.Text))
                 return;
 
-            BankAccount bankAccount = new BankAccount(OwnerTxt.Text);
-            BankAccounts.Add(bankAccount);
+            if(InterestRateNum.Value > 0 )
+            {
+                BankAccounts.Add(new SavingsAccount(OwnerTxt.Text, InterestRateNum.Value));
+            }
+            else
+            {
+                BankAccounts.Add(new BankAccount(OwnerTxt.Text));
+            }
 
             RefreshGrid();
-            OwnerTxt.Text = "";
+            OwnerTxt.Text = String.Empty;
+            InterestRateNum.Value = 0;
         }
 
         private void RefreshGrid()
