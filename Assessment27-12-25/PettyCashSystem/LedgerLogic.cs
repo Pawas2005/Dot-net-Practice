@@ -22,6 +22,7 @@ public class Ledger<T> where T : Transaction
 
         foreach(T t in transactions)
         {
+            //only comparing the date not the time
             if(t.Date.Date == date.Date)
             {
                 result.Add(t);
