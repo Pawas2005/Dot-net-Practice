@@ -1,0 +1,18 @@
+using System;
+using System.ComponentModel;
+
+namespace MethodOverloading
+{
+    public class Source
+    {
+        public int Add(int a, int b, int c)
+        {
+            return a + b + c;
+        }
+
+        public double Add(double a, double b, double c)
+        {
+            return a + b + c;
+        }
+    }
+}
