@@ -1,0 +1,2 @@
+ERROR Database failed
+ERROR Invalid user

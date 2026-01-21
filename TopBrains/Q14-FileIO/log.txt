@@ -1,0 +1,4 @@
+INFO App started
+ERROR Database failed
+WARN Disk low
+ERROR Invalid user
