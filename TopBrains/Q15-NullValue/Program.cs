@@ -50,3 +50,33 @@ class Program
             Console.WriteLine("Average = null");
     }
 }
+
+
+
+
+
+
+
+//Extension Method
+// using System;
+
+// namespace NullValue
+// {
+//     public static class MyExtension
+//     {
+//         public static void Print(this string str)
+//         {
+//             Console.WriteLine(str.ToUpper());
+//         }
+//     }
+
+//     public class Program
+//     {
+//         public static void Main()
+//         {
+//             string str = "Hello, World!";
+//             str.Print();
+
+//         }
+//     }
+// }
