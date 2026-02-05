@@ -12,7 +12,7 @@ public class Program
         //valid sentence (only letters and space)
         foreach(char ch in sentence)
         {
-            if(!(char.IsAsciiLetter(ch) || ch == ' '))
+            if(!(char.IsLetter(ch) || ch == ' '))
             {
                 Console.WriteLine("Invalid Sentence");
                 return;
