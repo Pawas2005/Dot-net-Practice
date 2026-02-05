@@ -6,9 +6,18 @@ public class CakeOrder
 {
     private Dictionary<String, Double> orderMap = new Dictionary<string, double>();
 
+    public Dictionary<String, Double> OrderMap
+    {
+        get { return orderMap; }
+        set { orderMap = value; }
+    }
+
     public void addOrderDetails(string orderId, double cakeCost)
     {
-        orderMap[orderId] = cakeCost;
+        if (!orderMap.ContainsKey(orderId))
+        {
+            orderMap.Add(orderId, cakeCost);
+        }
     }
 
     public Dictionary<string, double> findOrdersAboveSpecifiedCost(double cakeCost)
