@@ -19,8 +19,8 @@ public class Program
             {
                 string[] parts = input.Split(':');
 
-                string gadgetID = parts[0];
-                int period = int.Parse(parts[2]);
+                string gadgetID = parts[0];  //T283:Television
+                int period = int.Parse(parts[2]); //10
 
                 util.validateGadgetID(gadgetID);
                 util.validateWarrantyPeriod(period);

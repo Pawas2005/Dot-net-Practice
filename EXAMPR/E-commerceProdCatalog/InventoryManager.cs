@@ -39,7 +39,7 @@ public class InventoryManager
         if(product == null) return false;
         if(product.StockQuantity < quantity) return false;
 
-        // Reducing stock after a sale
+        // Reducing stock after sale
         product.StockQuantity -= quantity;
         
         return true;

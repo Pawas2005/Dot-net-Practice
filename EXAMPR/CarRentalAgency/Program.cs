@@ -40,7 +40,7 @@ public class Program
                     Console.Write("Daily Rate: ");
                     double rate = double.Parse(Console.ReadLine());
 
-                    rentalManager.AddCar(license, make, model, type, rate);
+                    rentalManager.AddCar(license, make, model, type, rate);8
                     break;
 
                 case 2:
@@ -100,3 +100,79 @@ public class Program
         }
     }
 }
+
+
+
+
+// using System;
+// namespace CarRentalAgency;
+
+// public class Program
+// {
+//     //Step1: create a delegate
+//     public delegate void MyDelegate(string msg);
+
+//     //Step2: create method
+//     static void sayHello(string msg)
+//     {
+//         Console.WriteLine("Hello " + msg);
+//     } 
+
+//     static void Main()
+//     {
+//         //Step3: create delegate object & assign method
+//         MyDelegate del = sayHello;
+
+//         //Step4: call method using delegate 
+//         del("Pawas");
+//     }
+// }
+
+
+// using System;
+// namespace CarRentalAgency;
+
+// public delegate void MyBooking(string msg);
+
+// public  class CarRental
+// {
+//     //declare an event
+//     public event MyBooking OnCarBooked;
+
+//     public void BookCar(string customerName)
+//     {
+//         Console.WriteLine("Car is Successfully booked for " + customerName);
+
+//         //raise an event
+//         if(OnCarBooked != null)
+//         {
+//             OnCarBooked($"Notification: Car booking confirmed for {customerName}.");
+//         }
+//     }
+// }
+
+// public class Program
+// {
+//     //event handler methods
+//     static void SendEmail(string msg)
+//     {
+//         Console.WriteLine("Email sent -> " + msg);
+//     }
+
+//     static void SendSMS(String msg)
+//     {
+//         Console.WriteLine("SMS sent -> " + msg);
+//     }
+
+//     public static void Main()
+//     {
+//         CarRental carRental = new CarRental();
+
+//         // Subscribe methods to event
+//         carRental.OnCarBooked += SendEmail;
+//         carRental.OnCarBooked += SendSMS;
+
+//         // Trigger booking
+//         carRental.BookCar("Badmosh");
+//     }
+// }

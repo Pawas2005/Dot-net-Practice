@@ -37,9 +37,7 @@ public class Program
         int qty = int.Parse(Console.ReadLine());
 
         bool updated = manager.UpdateStock(code, qty);
-        Console.WriteLine(updated
-                ? "Stock updated successfully."
-                : "Insufficient stock / Invalid code.");
+        Console.WriteLine(updated ? "Stock updated successfully." : "Insufficient stock / Invalid code.");
 
         // Price Filter
         Console.WriteLine("Enter Max Price: ");
