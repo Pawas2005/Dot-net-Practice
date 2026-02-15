@@ -6,30 +6,61 @@ namespace Services
 {
     public class ManagementService
     {
-        private SortedDictionary<int, List<BaseEntity>> _data
-            = new SortedDictionary<int, List<BaseEntity>>();
+        private SortedDictionary<int, List<Order>> data = new SortedDictionary<int, List<Order>>(
+                                                            Comparer<int>.Create((a, b) => b.CompareTo(a)));
 
-        public void AddEntity(int key, BaseEntity entity)
+        public void AddOrder(Order order)
         {
-            // TODO: Validate entity
-            // TODO: Handle duplicate entries
-            // TODO: Add entity to SortedDictionary
+            if(order.OrderAmount <= 0)
+            {
+                throw new InvalidOrderAmountException("invalid order amount");
+            }
+
+            if (!data.ContainsKey(order.OrderAmount))
+            {
+                data[order.OrderAmount] = new List<Order>();
+            }
+
+            data[order.OrderAmount].Add(order);
+            Console.WriteLine("Order Added Successfully");
         }
 
-        public void UpdateEntity(int key)
+        public void UpdateOrder(string id, int amount)
         {
-            // TODO: Update entity logic
+            if(amount <= 0)
+            {
+                throw new InvalidOrderAmountException("Invalid Order Amount");
+            }
+
+            foreach(var amtKey in data.Values)
+            {
+                var amt = amtKey.FirstOrDefault(a => a.OrderId == id);
+
+                if(amt != null)
+                {
+                    amt.OrderAmount = amount;
+                    Console.WriteLine("Amount Updated Sucessfully");
+                    return;
+                }
+            }
+            throw new OrderNotFoundException("Order Not Found");
         }
 
-        public void RemoveEntity(int key)
+        public void DisplayOrders()
         {
-            // TODO: Remove entity logic
-        }
+            if(data.Count() == 0)
+            {
+                Console.WriteLine("No order data found.");
+                return;
+            }
 
-        public IEnumerable<BaseEntity> GetAll()
-        {
-            // TODO: Return sorted entities
-            return new List<BaseEntity>();
+            foreach(var amtKey in data.Keys)
+            {
+                foreach(var a in data[amtKey])
+                {
+                    Console.WriteLine($"Details: {a.OrderId} {a.CustomerName} {a.OrderAmount}");
+                }
+            }
         }
     }
 }
