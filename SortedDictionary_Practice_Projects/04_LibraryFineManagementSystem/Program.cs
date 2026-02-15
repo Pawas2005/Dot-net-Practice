@@ -1,4 +1,5 @@
 using System;
+using Domain;
 using Services;
 
 namespace ConsoleApp
@@ -7,39 +8,53 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            ManagementService service = new ManagementService();
+            MemberUtility memberUtility = new MemberUtility();
 
             while (true)
             {
-                Console.WriteLine("1. Display");
-                Console.WriteLine("2. Add");
-                Console.WriteLine("3. Update");
-                Console.WriteLine("4. Remove");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("=============Library Fine Management System==================");
+                Console.WriteLine("1. Display Members by Fine");
+                Console.WriteLine("2. Pay Fine");
+                Console.WriteLine("3. Add Member");
+                Console.WriteLine("4. Exit");
 
                 // TODO: Read user choice
 
-                int choice = 0; // TODO
+                int choice = int.Parse(Console.ReadLine()); // TODO
 
                 switch (choice)
                 {
                     case 1:
                         // TODO: Display data
+                        memberUtility.DisplayMembers();
                         break;
+
                     case 2:
-                        // TODO: Add entity
+                        string id = Console.ReadLine();
+                        int amount = int.Parse(Console.ReadLine());
+
+                        memberUtility.PayFine(id, amount);
                         break;
+
                     case 3:
-                        // TODO: Update entity
+                        string[] inp = Console.ReadLine().Split(' ');
+                        Member member = new Member()
+                        {
+                            MemberId = inp[0],
+                            Name = inp[1],
+                            FineAmount = int.Parse(inp[2])
+                        };
+
+                        memberUtility.AddMember(member);
                         break;
+
                     case 4:
-                        // TODO: Remove entity
-                        break;
-                    case 5:
                         Console.WriteLine("Thank You");
                         return;
+
                     default:
                         // TODO: Handle invalid choice
+                        Console.WriteLine("Invalid Choice. Please choose betwee");
                         break;
                 }
             }
