@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Domain;
 using Exceptions;
 
@@ -6,30 +7,64 @@ namespace Services
 {
     public class ManagementService
     {
-        private SortedDictionary<int, List<BaseEntity>> _data
-            = new SortedDictionary<int, List<BaseEntity>>();
+        private SortedDictionary<int, List<Investment>> data = new SortedDictionary<int, List<Investment>>();
 
-        public void AddEntity(int key, BaseEntity entity)
+        public void AddInvestment(Investment investment)
         {
-            // TODO: Validate entity
-            // TODO: Handle duplicate entries
-            // TODO: Add entity to SortedDictionary
+            if(investment.Riskrating < 1 || investment.Riskrating > 5)
+            {
+                throw new InvalidRiskRatingException("Invalid Risk Rating");
+            }
+
+            if(data.Values.Any(List => List.Any(l => l.InvestmentId == investment.InvestmentId)))
+            {
+                throw new DuplicateInvestmentException("Duplicate ID Found");
+            }
+
+            if (!data.ContainsKey(investment.Riskrating))
+            {
+                data[investment.Riskrating] = new List<Investment>();
+            }
+
+            data[investment.Riskrating].Add(investment);
+            Console.WriteLine("Investment added Successfully.");
         }
 
-        public void UpdateEntity(int key)
+        public void DisplayInvestments()
         {
-            // TODO: Update entity logic
+            if(data.Count() == 0)
+            {
+                Console.WriteLine("No data found");
+                return;
+            }
+
+            foreach(var riskKey in data.Keys)
+            {
+                foreach(var r in data[riskKey])
+                {
+                    Console.WriteLine($"Details: {r.InvestmentId} {r.AssetName} {r.Riskrating}");
+                }
+            }
         }
 
-        public void RemoveEntity(int key)
+        public void UpdateRisk(string id, int riskR)
         {
-            // TODO: Remove entity logic
-        }
+            if(riskR < 1 || riskR > 5)
+            {
+                throw new InvalidRiskRatingException("Invalid Risk Rating");
+            }
 
-        public IEnumerable<BaseEntity> GetAll()
-        {
-            // TODO: Return sorted entities
-            return new List<BaseEntity>();
+            foreach(var riskKey in data.Values)
+            {
+                var risk = riskKey.FirstOrDefault(r => r.InvestmentId == id);
+
+                if(risk != null)
+                {
+                    risk.Riskrating = riskR;
+                    Console.WriteLine("Risk Rating Updated Successfully.");
+                    return;
+                }
+            }
         }
     }
 }

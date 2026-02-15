@@ -1,4 +1,5 @@
 using System;
+using Domain;
 using Services;
 
 namespace ConsoleApp
@@ -11,35 +12,52 @@ namespace ConsoleApp
 
             while (true)
             {
-                Console.WriteLine("1. Display");
-                Console.WriteLine("2. Add");
-                Console.WriteLine("3. Update");
-                Console.WriteLine("4. Remove");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine($"===============Investment Risk Classification System===============");
+                Console.WriteLine("1. Display Investments");
+                Console.WriteLine("2. Update Risk");
+                Console.WriteLine("3. Add Investment");
+                Console.WriteLine("4. Exit");
 
                 // TODO: Read user choice
 
-                int choice = 0; // TODO
+                int choice = int.Parse(Console.ReadLine()); // TODO
 
                 switch (choice)
                 {
                     case 1:
                         // TODO: Display data
+                        service.DisplayInvestments();
                         break;
+
                     case 2:
-                        // TODO: Add entity
-                        break;
-                    case 3:
                         // TODO: Update entity
+                        string id = Console.ReadLine();
+                        int riskR = int.Parse(Console.ReadLine());
+
+                        service.UpdateRisk(id, riskR);
                         break;
+
+                    case 3:
+                        // TODO: Add entity
+                        String[] inp = Console.ReadLine().Split(' ');
+
+                        Investment investment = new Investment()
+                        {
+                            InvestmentId = inp[0],
+                            AssetName = inp[1],
+                            Riskrating = int.Parse(inp[2])
+                        };
+
+                        service.AddInvestment(investment);
+                        break;
+
                     case 4:
-                        // TODO: Remove entity
-                        break;
-                    case 5:
                         Console.WriteLine("Thank You");
                         return;
+
                     default:
                         // TODO: Handle invalid choice
+                        Console.WriteLine("Invalid Choice, Please Select between 1-4");
                         break;
                 }
             }
