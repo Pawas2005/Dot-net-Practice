@@ -6,30 +6,68 @@ namespace Services
 {
     public class ManagementService
     {
-        private SortedDictionary<int, List<BaseEntity>> _data
-            = new SortedDictionary<int, List<BaseEntity>>();
+        private SortedDictionary<int, Queue<Patient>> data = new SortedDictionary<int, Queue<Patient>>();
 
-        public void AddEntity(int key, BaseEntity entity)
+        public void AddPatient(Patient patient)
         {
-            // TODO: Validate entity
-            // TODO: Handle duplicate entries
-            // TODO: Add entity to SortedDictionary
+            if(patient.SeverityLevel < 1 || patient.SeverityLevel > 5)
+            {
+                throw new InvalidSeverityLevelException("Severity level must between 1-5");
+            }
+
+            if (!data.ContainsKey(patient.SeverityLevel))
+            {
+                data[patient.SeverityLevel] = new Queue<Patient>();
+            }
+            
+            data[patient.SeverityLevel].Enqueue(patient);
+            Console.WriteLine("Patient Added Successfully.");
         }
 
-        public void UpdateEntity(int key)
+        public void UpdateSeverity(string id, int level)
         {
-            // TODO: Update entity logic
+            // TODO: Update logic
+            if(level < 1 || level > 5)
+            {
+                throw new InvalidSeverityLevelException("Severity level must between 1-5");
+            }
+
+            foreach(var sevkey in data.Keys.ToList())
+            {
+                var queue = data[sevkey];
+                var list = queue.ToList();
+                var patient = list.FirstOrDefault(p => p.PatientId == id);
+
+                if(patient != null)
+                {
+                    if(patient.SeverityLevel == 1)
+                    {
+                        throw new InvalidSeverityLevelException("Already highest level Priority");
+                    }
+
+                    patient.SeverityLevel = level;
+                    Console.WriteLine("Updated Patient Severity Level");
+                    return;
+                }
+            }
+            throw new PatientNotFoundException("Patient Not found");
         }
 
-        public void RemoveEntity(int key)
+        public void DisplayPatientsByPriority()
         {
-            // TODO: Remove entity logic
-        }
+            if(data.Count() <= 0)
+            {
+                Console.WriteLine("No patient data found");
+                return;
+            }
 
-        public IEnumerable<BaseEntity> GetAll()
-        {
-            // TODO: Return sorted entities
-            return new List<BaseEntity>();
+            foreach(var sevkey in data.Keys)
+            {
+                foreach(var s in data[sevkey])
+                {
+                    Console.WriteLine($"Details: {s.PatientId} {s.Name} Severity Level: {s.SeverityLevel}");
+                }
+            }
         }
     }
 }
