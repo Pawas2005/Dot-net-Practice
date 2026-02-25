@@ -36,8 +36,6 @@ namespace MVC_Core_WebApp1.Controllers
             return View(s);
         }
 
-
-
         // GET: StudentController/Details/5
         public ActionResult StudentDetailsByName(string name)
         {
@@ -72,17 +70,27 @@ namespace MVC_Core_WebApp1.Controllers
         // GET: StudentController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Student s = sRepo.ShowDetailsByID(id);
+            if(s == null)
+            {
+                return NotFound();
+            }
+            return View(s);
         }
 
         // POST: StudentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Student student)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    sRepo.UpdateData(id, student);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(student);
             }
             catch
             {
@@ -93,7 +101,12 @@ namespace MVC_Core_WebApp1.Controllers
         // GET: StudentController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Student s = sRepo.ShowDetailsByID(id);
+            if(s == null)
+            {
+                return NotFound();
+            }
+            return View(s);
         }
 
         // POST: StudentController/Delete/5
@@ -103,6 +116,7 @@ namespace MVC_Core_WebApp1.Controllers
         {
             try
             {
+                sRepo.DeleteData(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
