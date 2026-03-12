@@ -3,30 +3,20 @@ using ProductApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to container
+// Add controllers
 builder.Services.AddControllers();
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure In-Memory Database
+// Configure Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("ProductDb"));
 
-// Add CORS policy
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowMVCApp",
-        builder =>
-        {
-            builder.WithOrigins("https://localhost:7000") // MVC app URL
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
-        });
-});
-
 var app = builder.Build();
 
-// Configure pipeline
+// Swagger UI
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -34,8 +24,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowMVCApp");
+
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
