@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card p-4 shadow">
+        <h2 class="text-center">Index - Simple Calculator</h2>
+        <p class="text-center text-muted">Trainer Name: Mohd Salman</p>
+
+        <div class="mb-3">
+            <label class="form-label">First Number (Integer)</label>
+            <input type="number" id="num1" class="form-control" value="45">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Second Number (Integer)</label>
+            <input type="number" id="num2" class="form-control" value="12">
+        </div>
+
+        <div class="row g-2">
+            <div class="col">
+                <button class="btn btn-success w-100" onclick="calculate('add')">Add</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-primary w-100" onclick="calculate('subtract')">Subtract</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-warning w-100" onclick="calculate('multiply')">Multiply</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-danger w-100" onclick="calculate('divide')">Division</button>
+            </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-secondary text-white text-center rounded">
+            <h5>Calculated Result</h5>
+            <p id="result">Result will appear here</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function calculate(operation) {
+    let a = parseFloat(document.getElementById("num1").value);
+    let b = parseFloat(document.getElementById("num2").value);
+    let result;
+
+    switch(operation) {
+        case 'add':
+            result = a + b;
+            document.getElementById("result").innerText = `${a} + ${b} = ${result}`;
+            break;
+
+        case 'subtract':
+            result = a - b;
+            document.getElementById("result").innerText = `${a} - ${b} = ${result}`;
+            break;
+
+        case 'multiply':
+            result = a * b;
+            document.getElementById("result").innerText = `${a} × ${b} = ${result}`;
+            break;
+
+        case 'divide':
+            if (b === 0) {
+                document.getElementById("result").innerText = "Cannot divide by zero";
+            } else {
+                result = a / b;
+                document.getElementById("result").innerText = `${a} ÷ ${b} = ${result}`;
+            }
+            break;
+    }
+}
+</script>
+
+</body>
+</html>
